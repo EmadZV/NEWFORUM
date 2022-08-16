@@ -35,12 +35,14 @@ def post_list(request):
 
 
 def post_detail(request, post_id=1):
+    user = request.user
     new_comment = None
     new_answer = None
     post = PostModel.objects.get(id=post_id)
-    # comment = CommentModel.objects.get(post=post_id)
-    # CommentModel.post = post
-    # answer = AnswerModel.objects.get()
+
+    comment = post.post_comment.all()
+    answer = post.answermodel_set.all()
+
     answerform = AnswerCreateForm(request.POST)
     commentform = CommentCreateForm(request.POST)
     if request.method == 'POST':
@@ -50,7 +52,9 @@ def post_detail(request, post_id=1):
             if commentform.is_valid():
                 new_comment = commentform.save(commit=False)
                 new_comment.post = post
+                new_comment.user = user 
                 new_comment.save()
+
         elif 'answer' in request.POST:
             answerform = AnswerCreateForm(data=request.POST)
             if answerform.is_valid():

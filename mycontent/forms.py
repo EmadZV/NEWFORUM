@@ -13,10 +13,10 @@ class PostCreateForm(forms.ModelForm):
 class CommentCreateForm(forms.ModelForm):
     class Meta:
         model = CommentModel
-        fields = ('body',)
+        fields = ('cbody',)
 
 
 class AnswerCreateForm(forms.ModelForm):
     class Meta:
-        model = CommentModel
-        fields = ('body',)
+        model = AnswerModel
+        fields = ('abody', 'image', )

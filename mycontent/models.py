@@ -36,24 +36,24 @@ class PostModel(models.Model):
         return self.title
 
 
-class AnswerModel(models.Model):
+class AnswerModel(models.Model): # modelname_set
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_answer', default=None)
-    body = models.TextField()
+    abody = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    # post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
+    post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
     image = models.ImageField()
     accepted = models.BooleanField()
 
     def __str__(self):
-        return self.body
+        return self.abody
 
 
 class CommentModel(models.Model):
-    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='post_comment', )
-    answer = models.ForeignKey(AnswerModel, on_delete=models.CASCADE, related_name='answer_comment')
+    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='post_comment', null=True)
+    answer = models.ForeignKey(AnswerModel, on_delete=models.CASCADE, related_name='answer_comment', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment', default=None)
-    body = models.TextField()
+    cbody = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -61,4 +61,4 @@ class CommentModel(models.Model):
         return humanize.naturaltime(self.created, self.updated)
 
     def __str__(self):
-        return self.body
+        return self.cbody

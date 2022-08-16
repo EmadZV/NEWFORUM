@@ -3,7 +3,12 @@
 {% extends "base.html" %}
 {% block title %}My amazing forum{% endblock %}
 {% block content%}
-    <a>{{ post }}</a>
+
+    <a>{{ post.name }}</a>
+    <a>{{ post.cbody }}</a>
+    <a>{{ post.created }}</a>
+    <a>{{ post.updated }}</a>
+    
     <br>
     {% if new_comment %}
          <a>Your comment has been sent to verify</a>
@@ -12,7 +17,7 @@
         <form  class="answer" method="post">
               {% csrf_token %}
               {{ commentform.as_p }}
-              <button type="submit">ADD COMMENT</button>
+              <button type="submit" name="comment">ADD COMMENT</button>
         </form>
     {% endif %}
 
@@ -23,7 +28,7 @@
         <form  class="answer" method="post">
               {% csrf_token %}
               {{ answerform.as_p }}
-              <button type="submit">ADD ANSWER</button>
+              <button type="submit" name="answer">ADD ANSWER</button>
         </form>
 
     {% endif %}
